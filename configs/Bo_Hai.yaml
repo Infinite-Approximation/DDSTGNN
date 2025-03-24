@@ -1,0 +1,43 @@
+start_up:
+  device: cuda:0
+  model_name: D2STGNN_SST
+  mode: scratch
+  # mode: test
+data_args:
+  data_dir: datasets/Bo_Hai
+  adj_data_path: datasets/Bo_Hai/adj.npy
+  adj_type: doubletransition
+model_args:
+  batch_size: 4
+  num_feat:     1
+  num_hidden:   64
+  num_nodes:     207
+  node_hidden:  10
+  time_emb_dim: 10
+  dropout:      0.1
+  in_seq_length: 35
+  out_seq_length: 7
+  k_t:          3
+  k_s:          2
+  gap:          1
+  num_modalities: 2
+# Optimization Args
+optim_args:
+  # adam optimizer
+  lrate:          0.002                                   # learning rate
+  print_model:    False
+  wdecay:         1.0e-5                                  # weight decay of adam
+  eps:            1.0e-8                                  # eps of adam
+  # learning rate scheduler
+  lr_schedule:    True                                    # if use learning rate scheduler
+  lr_sche_steps:  [1, 30, 38, 46, 54, 62, 70, 80]         # steps where decay the learning rate
+  lr_decay_ratio: 0.5                                     # learning rate decay rate
+  # curriculum learning
+  if_cl:          False                                    # if use curriculum learning
+  cl_epochs:      6                                       # epochs of curriculum learning when to forecasting next time step
+  # warm up
+  warm_epochs:    0                                       # epochs of warmming up
+  # procedure
+  epochs:         300                                      # total epoch numbers
+  patience:       40                                    # patience for earlystopping
+
